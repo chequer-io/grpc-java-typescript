@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.chequer.sqlgate.grpc";
+option java_outer_classname = "UserProto";
+option objc_class_prefix = "RTG";
+
+package user;
+
+service UserService {
+
+    rpc GetUser (User) returns (User) {
+    }
+
+    rpc SaveUser (User) returns (User) {
+    }
+}
+
+message User {
+    int64 id = 1;
+    string name = 2;
+    int32 age = 3;
+    string email = 4;
+}

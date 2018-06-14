@@ -1,0 +1,21 @@
+{
+  "name": "electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "google-protobuf": "^3.5.0",
+    "grpc": "^1.12.3",
+    "grpc-web-client": "^0.6.2",
+    "ts-protoc-gen": "^0.7.3",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.9.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
+  },
+  "author": "",
+  "license": "ISC"
+}
