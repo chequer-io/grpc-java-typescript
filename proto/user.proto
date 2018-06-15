@@ -14,6 +14,16 @@ service UserService {
 
     rpc SaveUser (User) returns (User) {
     }
+
+    rpc UserStatus (stream Status) returns (User) {
+    }
+
+    rpc ListUserList (Empty) returns (stream User) {
+    }
+}
+
+message Empty {
+
 }
 
 message User {
@@ -21,4 +31,16 @@ message User {
     string name = 2;
     int32 age = 3;
     string email = 4;
+
+    Status status = 5;
+}
+
+message Status {
+    int32 statusId = 1;
+    int32 userId = 2;
+    string message = 3;
+}
+
+message Query {
+    repeated string message = 1;
 }

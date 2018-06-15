@@ -1,10 +1,12 @@
 package com.chequer.sqlgate.rpc;
 
+import com.chequer.sqlgate.grpc.Empty;
 import com.chequer.sqlgate.grpc.User;
 import com.chequer.sqlgate.grpc.UserServiceGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -35,9 +37,21 @@ public class UserServiceTestClient {
         return response;
     }
 
+    public void getListUser() {
+        Iterator<User> users = blockingStub.listUserList(Empty.newBuilder().build());
+
+        while (users.hasNext()) {
+            System.out.println("user : " + users.next());
+        }
+
+    }
+
     public static void main(String[] args) {
         UserServiceTestClient client = new UserServiceTestClient("localhost", 8090);
         User user = client.getUser(1L);
         System.out.println(user);
+
+        client.getListUser();
+
     }
 }
