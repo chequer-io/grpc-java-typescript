@@ -1,20 +1,23 @@
-import { clientFactory } from 'rxjs-grpc';
+import * as fs from "fs";
+import * as grpc from "grpc";
+import { clientFactory } from "rxjs-grpc";
 
-import { helloworld } from './grpc-namespaces';
+import { user } from "./grpc-namespaces";
 
 async function main() {
-  type ClientFactory = helloworld.ClientFactory;
-  const Services = clientFactory<ClientFactory>('helloworld.proto', 'helloworld');
+  type ClientFactory = user.ClientFactory;
+  const Services = clientFactory<ClientFactory>("../proto/user.proto", "user");
 
-  const services = new Services('localhost:50051');
-  const greeter = services.getGreeter();
+  const credentials = grpc.credentials.createSsl(fs.readFileSync('../misc/localhost.crt'), fs.readFileSync('../misc/localhost.key'), fs.readFileSync('../misc/localhost.crt'));
+  const services = new Services("localhost:8090", credentials);
+  const greeter = services.getUserService();
 
-  await greeter.sayHello({ name: 'world' }).forEach(response => {
-    console.log(`Greeting: ${response.message}`);
+  await greeter.getUser({ id: 1 }).forEach(response => {
+    console.log(`User: ${response}`);
   });
 
-  await greeter.sayMultiHello({ name: 'world', num_greetings: 3 }).forEach(response => {
-    console.log(`Multi greeting: ${response.message}`);
+  await greeter.listUserList({}).forEach(response => {
+    console.log(`Multi user: ${response}`);
   });
 }
 

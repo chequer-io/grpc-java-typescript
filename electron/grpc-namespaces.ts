@@ -1,108 +1,161 @@
+import * as $protobuf from 'protobufjs';
 import { Observable } from 'rxjs/Observable';
 
 /**
- * Namespace helloworld.
- * @exports helloworld
+ * Namespace user.
+ * @exports user
  * @namespace
  */
-export namespace helloworld {
+export namespace user {
 
     /**
      * Contains all the RPC service clients.
-     * @exports helloworld.ClientFactory
+     * @exports user.ClientFactory
      * @interface
      */
     export interface ClientFactory {
 
         /**
-         * Returns the Greeter service client.
-         * @returns {helloworld.Greeter}
+         * Returns the UserService service client.
+         * @returns {user.UserService}
          */
-        getGreeter(): helloworld.Greeter;
+        getUserService(): user.UserService;
     }
 
     /**
      * Builder for an RPC service server.
-     * @exports helloworld.ServerBuilder
+     * @exports user.ServerBuilder
      * @interface
      */
     export interface ServerBuilder {
 
         /**
-         * Adds a Greeter service implementation.
-         * @param {helloworld.Greeter} impl Greeter service implementation
-         * @returns {helloworld.ServerBuilder}
+         * Adds a UserService service implementation.
+         * @param {user.UserService} impl UserService service implementation
+         * @returns {user.ServerBuilder}
          */
-        addGreeter(impl: helloworld.Greeter): helloworld.ServerBuilder;
+        addUserService(impl: user.UserService): user.ServerBuilder;
     }
 
     /**
-     * Constructs a new Greeter service.
-     * @exports helloworld.Greeter
+     * Constructs a new UserService service.
+     * @exports user.UserService
      * @interface
      */
-    export interface Greeter {
+    export interface UserService {
 
         /**
-         * Calls SayHello.
-         * @param {helloworld.HelloRequest} request HelloRequest message or plain object
-         * @returns {Observable<helloworld.HelloReply>}
+         * Calls GetUser.
+         * @param {user.User} request User message or plain object
+         * @returns {Observable<user.User>}
          */
-        sayHello(request: helloworld.HelloRequest): Observable<helloworld.HelloReply>;
+        getUser(request: user.User): Observable<user.User>;
 
         /**
-         * Calls SayMultiHello.
-         * @param {helloworld.MultiHelloRequest} request MultiHelloRequest message or plain object
-         * @returns {Observable<helloworld.HelloReply>}
+         * Calls SaveUser.
+         * @param {user.User} request User message or plain object
+         * @returns {Observable<user.User>}
          */
-        sayMultiHello(request: helloworld.MultiHelloRequest): Observable<helloworld.HelloReply>;
+        saveUser(request: user.User): Observable<user.User>;
+
+        /**
+         * Calls UserStatus.
+         * @param {user.Status} request Status message or plain object
+         * @returns {Observable<user.User>}
+         */
+        userStatus(request: user.Status): Observable<user.User>;
+
+        /**
+         * Calls ListUserList.
+         * @param {user.Empty} request Empty message or plain object
+         * @returns {Observable<user.User>}
+         */
+        listUserList(request: user.Empty): Observable<user.User>;
     }
 
     /**
-     * Constructs a new HelloRequest.
-     * @exports helloworld.HelloRequest
+     * Constructs a new Empty.
+     * @exports user.Empty
      * @interface
      */
-    export interface HelloRequest {
+    export interface Empty {
+    }
+
+    /**
+     * Constructs a new User.
+     * @exports user.User
+     * @interface
+     */
+    export interface User {
 
         /**
-         * HelloRequest name.
+         * User id.
+         * @type {number|$protobuf.Long|undefined}
+         */
+        id?: (number|$protobuf.Long);
+
+        /**
+         * User name.
          * @type {string|undefined}
          */
         name?: string;
-    }
-
-    /**
-     * Constructs a new MultiHelloRequest.
-     * @exports helloworld.MultiHelloRequest
-     * @interface
-     */
-    export interface MultiHelloRequest {
 
         /**
-         * MultiHelloRequest name.
+         * User age.
+         * @type {number|undefined}
+         */
+        age?: number;
+
+        /**
+         * User email.
          * @type {string|undefined}
          */
-        name?: string;
+        email?: string;
 
         /**
-         * MultiHelloRequest num_greetings.
-         * @type {number}
+         * User status.
+         * @type {user.Status|undefined}
          */
-        num_greetings: number;
+        status?: user.Status;
     }
 
     /**
-     * Constructs a new HelloReply.
-     * @exports helloworld.HelloReply
+     * Constructs a new Status.
+     * @exports user.Status
      * @interface
      */
-    export interface HelloReply {
+    export interface Status {
 
         /**
-         * HelloReply message.
+         * Status statusId.
+         * @type {number|undefined}
+         */
+        statusId?: number;
+
+        /**
+         * Status userId.
+         * @type {number|undefined}
+         */
+        userId?: number;
+
+        /**
+         * Status message.
          * @type {string|undefined}
          */
         message?: string;
+    }
+
+    /**
+     * Constructs a new Query.
+     * @exports user.Query
+     * @interface
+     */
+    export interface Query {
+
+        /**
+         * Query message.
+         * @type {Array.<string>|undefined}
+         */
+        message?: string[];
     }
 }
