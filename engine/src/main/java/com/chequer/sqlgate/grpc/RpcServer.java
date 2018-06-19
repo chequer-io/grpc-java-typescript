@@ -21,7 +21,7 @@ public class RpcServer {
         this.port = port;
 
         // TLS Netty Server
-        SslContextBuilder sslContextBuilder = SslContextBuilder.forServer(RpcServer.class.getResourceAsStream("/localhost.crt"), RpcServer.class.getResourceAsStream("/localhost.key"));
+        SslContextBuilder sslContextBuilder = SslContextBuilder.forServer(RpcServer.class.getResourceAsStream("/localhost.crt"), RpcServer.class.getResourceAsStream("/localhost.pem"));
         GrpcSslContexts.configure(sslContextBuilder, SslProvider.OPENSSL);
         server = NettyServerBuilder.forPort(port).sslContext(sslContextBuilder.build()).build();
 
