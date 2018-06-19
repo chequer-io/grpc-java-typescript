@@ -3,7 +3,7 @@
 # require a certificate authority to be imported by the browser (localhostCA.pem) while
 # the server uses a cert and key signed by that certificate authority.
 # Based partly on https://stackoverflow.com/a/48791236
-CA_PASSWORD=notsafe
+CA_PASSWORD=sqlgate-next
 
 # Generate the root certificate authority key with the set password
 openssl genrsa -des3 -passout pass:$CA_PASSWORD -out localhostCA.key 2048
@@ -21,3 +21,6 @@ openssl req -new -key localhost.key -out localhost.csr -config localhostCA.conf
 # Create the certificate for the webserver to serve using the localhost.conf config.
 openssl x509 -req -in localhost.csr -CA localhostCA.pem -CAkey localhostCA.key -CAcreateserial \
 -out localhost.crt -days 1024 -sha256 -extfile localhost.conf -passin pass:$CA_PASSWORD
+
+# Generate pkcs8 pem for Java
+openssl pkcs8 -in localhost.key -inform pem -out localhost.pem -outform PEM -topk8 -nocrypt

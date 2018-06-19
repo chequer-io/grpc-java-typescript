@@ -8,7 +8,7 @@
     "url": "https://github.com/kondi/rxjs-grpc.git"
   },
   "scripts": {
-    "generate_cert": "cd ../misc ./gen_cert.sh",
+    "generate_cert": "cd ../misc && ./gen_cert.sh && \\cp -f localhost.crt ../engine/src/main/resources/ && \\cp -f localhost.pem ../engine/src/main/resources/",
     "start": "npm run grpc-namespaces",
     "server": "ts-node server",
     "client": "ts-node client",
