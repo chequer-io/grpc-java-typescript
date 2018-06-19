@@ -1,28 +1,26 @@
 {
-  "name": "grpc-web-example",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "generate_cert": "cd ../misc ./gen_cert.sh",
-    "build:proto": "./protogen.sh",
-    "get_go_deps": "./get_go_deps.sh",
-    "webpack-dev:tls": "export USE_TLS=true && webpack-dev-server --colors --watch --hot --inline --port 8082 --host 0.0.0.0 --output-public-path=https://localhost:8082/build/ --https --cert=../misc/localhost.crt --key=../misc/localhost.key",
-    "webpack-dev": "webpack-dev-server --colors --watch --hot --inline --port 8081 --host 0.0.0.0 --output-public-path=http://localhost:8081/build/",
-    "start:tls": "npm run build:proto && npm run webpack-dev:tls",
-    "start": "npm run build:proto && npm run webpack-dev"
+  "name": "rxjs-grpc-helloworld",
+  "version": "0.0.1",
+  "description": "Helloworld example for rxjs-grpc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kondi/rxjs-grpc.git"
   },
-  "license": "none",
+  "scripts": {
+    "start": "npm run grpc-namespaces",
+    "server": "ts-node server",
+    "client": "ts-node client",
+    "preserver": "npm run grpc-namespaces",
+    "preclient": "npm run grpc-namespaces",
+    "grpc-namespaces": "rxjs-grpc -o grpc-namespaces.ts ./*.proto"
+  },
   "dependencies": {
-    "@types/google-protobuf": "^3.2.5",
-    "google-protobuf": "^3.2.0",
-    "grpc-web-client": "0.6.2"
+    "rxjs": "^5.2.0",
+    "rxjs-grpc": "^0.1.8"
   },
   "devDependencies": {
-    "ts-loader": "^4.4.1",
-    "ts-protoc-gen": "0.7.3",
-    "typescript": "2.9.2",
-    "webpack": "^4.12.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "ts-node": "^6.1.1",
+    "typescript": "^2.9.2"
   }
 }
