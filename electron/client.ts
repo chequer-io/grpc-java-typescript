@@ -8,7 +8,7 @@ async function main() {
   type ClientFactory = user.ClientFactory;
   const Services = clientFactory<ClientFactory>("../proto/user.proto", "user");
 
-  const credentials = grpc.credentials.createSsl(fs.readFileSync('../misc/localhost.crt'));
+  const credentials = grpc.credentials.createSsl(fs.readFileSync('../misc/localhostCA.pem'));
   const services = new Services("localhost:8090", credentials);
   const greeter = services.getUserService();
 
