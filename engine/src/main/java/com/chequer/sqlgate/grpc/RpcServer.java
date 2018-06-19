@@ -1,5 +1,6 @@
 package com.chequer.sqlgate.grpc;
 
+import com.chequer.sqlgate.grpc.service.UserService;
 import io.grpc.Server;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyServerBuilder;
@@ -23,7 +24,7 @@ public class RpcServer {
         // TLS Netty Server
         SslContextBuilder sslContextBuilder = SslContextBuilder.forServer(RpcServer.class.getResourceAsStream("/localhost.crt"), RpcServer.class.getResourceAsStream("/localhost.pem"));
         GrpcSslContexts.configure(sslContextBuilder, SslProvider.OPENSSL);
-        server = NettyServerBuilder.forPort(port).sslContext(sslContextBuilder.build()).build();
+        server = NettyServerBuilder.forPort(port).sslContext(sslContextBuilder.build()).addService(new UserService()).build();
 
         //ServerBuilder<?> builder = ServerBuilder.forPort(port);
         //server = builder.addService(new UserService()).build();
