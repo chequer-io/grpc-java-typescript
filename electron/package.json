@@ -10,9 +10,6 @@
   "scripts": {
     "generate_cert": "cd ../misc && ./gen_cert.sh && \\cp -f localhost.crt ../engine/src/main/resources/ && \\cp -f localhost.pem ../engine/src/main/resources/",
     "start": "npm run grpc-namespaces",
-    "server": "ts-node server",
-    "client": "ts-node client",
-    "preserver": "npm run grpc-namespaces",
     "preclient": "npm run grpc-namespaces",
     "grpc-namespaces": "rxjs-grpc -o grpc-namespaces.ts ../proto/*.proto"
   },

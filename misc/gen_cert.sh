@@ -3,7 +3,7 @@
 # require a certificate authority to be imported by the browser (localhostCA.pem) while
 # the server uses a cert and key signed by that certificate authority.
 # Based partly on https://stackoverflow.com/a/48791236
-CA_PASSWORD=sqlgate-next
+CA_PASSWORD=grpc
 
 # Generate the root certificate authority key with the set password
 openssl genrsa -des3 -passout pass:$CA_PASSWORD -out localhostCA.key 2048
