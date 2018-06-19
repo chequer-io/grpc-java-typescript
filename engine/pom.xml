@@ -27,6 +27,12 @@
             <artifactId>grpc-stub</artifactId>
             <version>1.12.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-auth</artifactId>
+            <version>1.12.0</version>
+        </dependency>
+    
     </dependencies>
     
     <build>

@@ -1,9 +1,12 @@
 package com.chequer.sqlgate.grpc;
 
-import com.chequer.sqlgate.grpc.service.UserService;
 import io.grpc.Server;
-import io.grpc.ServerBuilder;
+import io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.NettyServerBuilder;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.SslProvider;
 
+import javax.net.ssl.SSLException;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -14,11 +17,16 @@ public class RpcServer {
     private final int port;
     private final Server server;
 
-    public RpcServer(int port) {
+    public RpcServer(int port) throws SSLException {
         this.port = port;
 
-        ServerBuilder<?> builder = ServerBuilder.forPort(port);
-        server = builder.addService(new UserService()).build();
+        // TLS Netty Server
+        SslContextBuilder sslContextBuilder = SslContextBuilder.forServer(RpcServer.class.getResourceAsStream("/localhost.crt"), RpcServer.class.getResourceAsStream("/localhost.key"));
+        GrpcSslContexts.configure(sslContextBuilder, SslProvider.OPENSSL);
+        server = NettyServerBuilder.forPort(port).sslContext(sslContextBuilder.build()).build();
+
+        //ServerBuilder<?> builder = ServerBuilder.forPort(port);
+        //server = builder.addService(new UserService()).build();
     }
 
     public void start() throws IOException {
