@@ -4,8 +4,12 @@ import com.chequer.sqlgate.grpc.Empty;
 import com.chequer.sqlgate.grpc.User;
 import com.chequer.sqlgate.grpc.UserServiceGrpc;
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.NegotiationType;
+import io.grpc.netty.NettyChannelBuilder;
+import io.netty.handler.ssl.SslContext;
 
+import javax.net.ssl.SSLException;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -18,12 +22,13 @@ public class UserServiceTestClient {
     private final UserServiceGrpc.UserServiceBlockingStub blockingStub;
     private final UserServiceGrpc.UserServiceStub asyncStub;
 
-    public UserServiceTestClient(String host, int port) {
-        this(ManagedChannelBuilder.forAddress(host, port).usePlaintext());
-    }
+    public UserServiceTestClient() throws SSLException {
+        NettyChannelBuilder builder = NettyChannelBuilder.forAddress("localhost", 8090);
+        SslContext sslContext = GrpcSslContexts.forClient().trustManager(UserServiceTestClient.class.getResourceAsStream("/localhost.crt")).build();
+        builder.negotiationType(NegotiationType.TLS);
+        builder.sslContext(sslContext);
 
-    public UserServiceTestClient(ManagedChannelBuilder<?> channelBuilder) {
-        channel = channelBuilder.build();
+        channel = builder.build();
         blockingStub = UserServiceGrpc.newBlockingStub(channel);
         asyncStub = UserServiceGrpc.newStub(channel);
     }
@@ -46,8 +51,8 @@ public class UserServiceTestClient {
 
     }
 
-    public static void main(String[] args) {
-        UserServiceTestClient client = new UserServiceTestClient("localhost", 8090);
+    public static void main(String[] args) throws SSLException {
+        UserServiceTestClient client = new UserServiceTestClient();
         User user = client.getUser(1L);
         System.out.println(user);
 
