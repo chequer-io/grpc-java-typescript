@@ -1,24 +1,32 @@
 {
-  "name": "rxjs-grpc-helloworld",
+  "name": "grpc-java-electron",
   "version": "0.0.1",
   "description": "Helloworld example for rxjs-grpc",
   "license": "MIT",
+  "main": "dist/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/kondi/rxjs-grpc.git"
   },
   "scripts": {
-    "generate_cert": "cd ../misc && ./gen_cert.sh && \\cp -f localhost.crt ../engine/src/main/resources/ && \\cp -f localhost.pem ../engine/src/main/resources/",
-    "start": "npm run grpc-namespaces",
-    "preclient": "npm run grpc-namespaces",
-    "grpc-namespaces": "rxjs-grpc -o grpc-namespaces.ts ../proto/*.proto"
+    "watch": "tsc -w",
+    "build": "npm run build:proto && npm run build:ts",
+    "generate_cert": "cd ../misc && ./gen_cert.sh && \\cp -f localhost.crt ../engine/src/main/resources/ && \\cp -f localhost.pem ../engine/src/main/resources/ && \\cp -f localhostCA.pem ../electron/",
+    "start": "npm run build && electron ./dist/main.js",
+    "build:ts": "rm -rf dist && tsc --skipLibCheck",
+    "build:proto": "rm -rf ./proto && cp -R ../proto ./proto && rxjs-grpc -o ./src/grpc-namespaces.ts ./proto/*.proto",
+    "postinstall": "npm install grpc --runtime=electron --target=2.0.2"
   },
   "dependencies": {
+    "@types/protobufjs": "^6.0.0",
+    "grpc": "^1.12.3",
+    "protobufjs": "^6.8.6",
     "rxjs": "^5.2.0",
     "rxjs-grpc": "^0.1.8"
   },
   "devDependencies": {
-    "ts-node": "^6.1.1",
+    "@types/node": "^10.3.4",
+    "electron": "^2.0.2",
     "typescript": "^2.9.2"
   }
 }
